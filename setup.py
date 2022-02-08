@@ -1,9 +1,5 @@
 #!/usr/bin/env python
-import sys
-
-from distutils.core import setup, Command
-from unittest import TextTestRunner, TestLoader
-from doctest import DocTestSuite
+from distutils.core import setup
 
 PYTHON_MODULES = [
     'hetzner',
@@ -20,24 +16,6 @@ PYTHON_MODULES = [
     'hetzner.tests.test_util_addr',
 ]
 
-
-class RunTests(Command):
-    description = "run test suite"
-    user_options = []
-    initialize_options = finalize_options = lambda self: None
-
-    def run(self):
-        tests = TestLoader().loadTestsFromName('hetzner.tests')
-        for module in PYTHON_MODULES:
-            try:
-                doctests = DocTestSuite(module)
-            except ValueError:
-                continue
-            tests.addTests(doctests)
-        result = TextTestRunner(verbosity=1).run(tests)
-        sys.exit(not result.wasSuccessful())
-
-
 setup(name='hetzner',
       version='1.0.0',
       description='High level access to the Hetzner robot',
@@ -46,5 +24,4 @@ setup(name='hetzner',
       author_email='aszlig@nix.build',
       scripts=['hetznerctl'],
       py_modules=PYTHON_MODULES,
-      cmdclass={'test': RunTests},
       license='BSD')
