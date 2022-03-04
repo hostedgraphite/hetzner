@@ -1,3 +1,13 @@
 *.pyc
 /build/
 /result
+
+# Tox
+.tox
+
+# Coverage
+.coverage
+cover
+
+# JetBrains
+.idea
